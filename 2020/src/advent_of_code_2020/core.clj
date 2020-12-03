@@ -11,13 +11,13 @@
 (defn dec1
   "Day 1: Report Repair"
   []
-  (-> (read-ints "dec1/input")
+  (-> (read-ints "inputs/dec1")
       (report-repair 2020)))
 
 
 (defn dec1pt2
   "Day 1: Report Repair"
   []
-  (-> (read-ints "dec1/input")
+  (-> (read-ints "inputs/dec1")
       (report-repair-elves 2020)))
 
