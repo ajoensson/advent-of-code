@@ -5,7 +5,9 @@
                                               password-philosophy-2]]
             [advent-of-code-2020.dec3 :refer [toboggan-trajectory]]
             [advent-of-code-2020.dec4 :refer [passport-processing
-                                              advanced-passport-processing]]))
+                                              advanced-passport-processing]]
+            [advent-of-code-2020.dec5 :refer [binary-boarding
+                                              fasten-seatbelt]]))
 
 (defn read-strs
   [filename]
@@ -61,7 +63,7 @@
          (reduce *))))
 
 (defn dec4
-  "Day 4: Passport Prpcessing"
+  "Day 4: Passport Processing"
   []
   (-> (read-strs "inputs/dec4")
       (passport-processing
@@ -75,3 +77,15 @@
       (advanced-passport-processing
         ["byr" "iyr" "eyr" "hgt" "hcl" "ecl" "pid"]
         ["cid"])))
+
+(defn dec5
+  "Day 5: Binary Boarding"
+  []
+  (-> (read-strs "inputs/dec5")
+      (binary-boarding)))
+
+(defn dec5pt2
+  "Day 5: Binary Boarding"
+  []
+  (-> (read-strs "inputs/dec5")
+      (fasten-seatbelt)))
