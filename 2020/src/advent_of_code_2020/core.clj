@@ -3,7 +3,9 @@
                                               report-repair-elves]]
             [advent-of-code-2020.dec2 :refer [password-philosophy
                                               password-philosophy-2]]
-            [advent-of-code-2020.dec3 :refer [toboggan-trajectory]]))
+            [advent-of-code-2020.dec3 :refer [toboggan-trajectory]]
+            [advent-of-code-2020.dec4 :refer [passport-processing
+                                              advanced-passport-processing]]))
 
 (defn read-strs
   [filename]
@@ -40,13 +42,13 @@
       (password-philosophy-2)))
 
 (defn dec3
-  "Day 2: Toboggan Trajectory"
+  "Day 3: Toboggan Trajectory"
   []
   (-> (read-strs "inputs/dec3")
       (toboggan-trajectory 3 1)))
 
 (defn dec3pt2
-  "Day 2: Toboggan Trajectory 2"
+  "Day 3: Toboggan Trajectory 2"
   []
   (let [environment (read-strs "inputs/dec3")
         slopes [[1 1]
@@ -57,3 +59,19 @@
     (->> slopes
          (map (partial apply toboggan-trajectory environment))
          (reduce *))))
+
+(defn dec4
+  "Day 4: Passport Prpcessing"
+  []
+  (-> (read-strs "inputs/dec4")
+      (passport-processing
+        ["byr" "iyr" "eyr" "hgt" "hcl" "ecl" "pid"]
+        ["cid"])))
+
+(defn dec4pt2
+  "Day 4: Passport Processing"
+  []
+  (-> (read-strs "inputs/dec4")
+      (advanced-passport-processing
+        ["byr" "iyr" "eyr" "hgt" "hcl" "ecl" "pid"]
+        ["cid"])))
