@@ -7,7 +7,9 @@
             [advent-of-code-2020.dec4 :refer [passport-processing
                                               advanced-passport-processing]]
             [advent-of-code-2020.dec5 :refer [binary-boarding
-                                              fasten-seatbelt]]))
+                                              fasten-seatbelt]]
+            [advent-of-code-2020.dec6 :refer [custom-customs
+                                              actual-custom-customs]]))
 
 (defn read-strs
   [filename]
@@ -89,3 +91,15 @@
   []
   (-> (read-strs "inputs/dec5")
       (fasten-seatbelt)))
+
+(defn dec6
+  "Day 6: Custom Customs"
+  []
+  (-> (read-strs "inputs/dec6")
+      (custom-customs)))
+
+(defn dec6pt2
+  "Day 6: Custom Customs"
+  []
+  (-> (read-strs "inputs/dec6")
+      (actual-custom-customs)))

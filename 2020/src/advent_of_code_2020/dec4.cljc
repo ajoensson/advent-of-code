@@ -1,13 +1,6 @@
 (ns advent-of-code-2020.dec4
-  (:require [clojure.string :refer [join
-                                    split]]))
-
-(defn split-by-empty-lines
-  [lines]
-  (->> lines
-       (partition-by empty?)
-       (map (partial join \space))
-       (filter (comp not empty?))))
+  (:require [clojure.string :refer [split]]
+            [advent-of-code-2020.helpers :refer [split-by-empty-lines]]))
 
 (defn passport-map
   [string]
