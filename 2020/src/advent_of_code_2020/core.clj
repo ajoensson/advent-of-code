@@ -9,7 +9,9 @@
             [advent-of-code-2020.dec5 :refer [binary-boarding
                                               fasten-seatbelt]]
             [advent-of-code-2020.dec6 :refer [custom-customs
-                                              actual-custom-customs]]))
+                                              actual-custom-customs]]
+            [advent-of-code-2020.dec7 :refer [find-all-containing-bags
+                                              total-bags-inside-str]]))
 
 (defn read-strs
   [filename]
@@ -103,3 +105,16 @@
   []
   (-> (read-strs "inputs/dec6")
       (actual-custom-customs)))
+
+(defn dec7
+  "Day 7: Handy Haversacks"
+  []
+  (-> (read-strs "inputs/dec7")
+      (find-all-containing-bags "shiny gold")
+      (count)))
+
+(defn dec7pt2
+  "Day 7: Handy Haversacks"
+  []
+  (-> (read-strs "inputs/dec7")
+      (total-bags-inside-str "shiny gold")))
