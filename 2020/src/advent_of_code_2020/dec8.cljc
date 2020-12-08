@@ -28,11 +28,14 @@
   (let [{pc      :pc
          ran-ops :ran-ops} program-state
         next-op (get program pc)]
-    (if (ran-ops pc)
-      (:acc program-state)
-      (program-runner program (-> program-state
-                                  (update :ran-ops #(conj % pc))
-                                  (execute-op next-op))))))
+    (cond
+      (nil? next-op) {:state :done
+                      :acc   (:acc program-state)}
+      (ran-ops pc) {:state :inf-loop
+                    :acc   (:acc program-state)}
+      :else (program-runner program (-> program-state
+                                        (update :ran-ops #(conj % pc))
+                                        (execute-op next-op))))))
 
 (defn handheld-halting
   [strs]
@@ -42,3 +45,23 @@
         (program-runner $ {:pc      0
                            :acc     0
                            :ran-ops #{}})))
+
+(defn swap-op
+  [input]
+  (let [[op numstr] (split input #"\s+")]
+    (case op
+      "nop" (str "jmp " numstr)
+      "jmp" (str "nop " numstr)
+      input)))
+
+(defn corrupted-program
+  [strs]
+  (let [len (count strs)
+        strs-vec (vec strs)]
+    (->> (map (fn [index]
+                (update strs-vec index swap-op))
+              (range len))
+         (map handheld-halting)
+         (filter (comp (partial = :done) :state))
+         (first)
+         (:acc))))

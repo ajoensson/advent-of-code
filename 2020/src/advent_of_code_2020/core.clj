@@ -12,7 +12,8 @@
                                               actual-custom-customs]]
             [advent-of-code-2020.dec7 :refer [find-all-containing-bags
                                               total-bags-inside-str]]
-            [advent-of-code-2020.dec8 :refer [handheld-halting]]))
+            [advent-of-code-2020.dec8 :refer [handheld-halting
+                                              corrupted-program]]))
 
 (defn read-strs
   [filename]
@@ -124,4 +125,11 @@
   "Day 8: Handheld Halting"
   []
   (-> (read-strs "inputs/dec8")
-      (handheld-halting)))
+      (handheld-halting)
+      (:acc)))
+
+(defn dec8pt2
+  "Day 8: Handheld Halting"
+  []
+  (-> (read-strs "inputs/dec8")
+      (corrupted-program)))
