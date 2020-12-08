@@ -11,7 +11,8 @@
             [advent-of-code-2020.dec6 :refer [custom-customs
                                               actual-custom-customs]]
             [advent-of-code-2020.dec7 :refer [find-all-containing-bags
-                                              total-bags-inside-str]]))
+                                              total-bags-inside-str]]
+            [advent-of-code-2020.dec8 :refer [handheld-halting]]))
 
 (defn read-strs
   [filename]
@@ -118,3 +119,9 @@
   []
   (-> (read-strs "inputs/dec7")
       (total-bags-inside-str "shiny gold")))
+
+(defn dec8
+  "Day 8: Handheld Halting"
+  []
+  (-> (read-strs "inputs/dec8")
+      (handheld-halting)))
