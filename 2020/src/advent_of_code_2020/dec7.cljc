@@ -1,7 +1,8 @@
 (ns advent-of-code-2020.dec7
   (:require [clojure.string :refer [replace
                                     split]
-             :rename {replace replace-str}]))
+             :rename {replace replace-str}]
+            [ysera.test :refer [is=]]))
 
 (defn parse-bag
   [string]
@@ -19,16 +20,16 @@
 
 (defn reverse-bag-hierarchy
   {:test (fn []
-           (clojure.test/is (= (reverse-bag-hierarchy [{:bag     "bright red"
-                                                        :content [{:bag "quite green"
-                                                                   :num 1}
-                                                                  {:bag "very blue"
-                                                                   :num 2}]}
-                                                       {:bag     "very blue"
-                                                        :content [{:bag "quite green"
-                                                                   :num 10}]}])
-                               {"quite green" ["very blue" "bright red"]
-                                "very blue"   ["bright red"]})))}
+           (is= (reverse-bag-hierarchy [{:bag     "bright red"
+                                         :content [{:bag "quite green"
+                                                    :num 1}
+                                                   {:bag "very blue"
+                                                    :num 2}]}
+                                        {:bag     "very blue"
+                                         :content [{:bag "quite green"
+                                                    :num 10}]}])
+                {"quite green" ["very blue" "bright red"]
+                 "very blue"   ["bright red"]}))}
   [bags]
   (reduce (fn [coll
                {bag      :bag

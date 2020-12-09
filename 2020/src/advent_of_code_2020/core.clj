@@ -13,7 +13,9 @@
             [advent-of-code-2020.dec7 :refer [find-all-containing-bags
                                               total-bags-inside-str]]
             [advent-of-code-2020.dec8 :refer [handheld-halting
-                                              corrupted-program]]))
+                                              corrupted-program]]
+            [advent-of-code-2020.dec9 :refer [check-n-previous
+                                              smallest-contiguous-sum]]))
 
 (defn read-strs
   [filename]
@@ -133,3 +135,16 @@
   []
   (-> (read-strs "inputs/dec8")
       (corrupted-program)))
+
+(defn dec9
+  "Day 9: Encoding Error"
+  []
+  (-> (read-ints "inputs/dec9")
+      (check-n-previous 25)))
+
+(defn dec9pt2
+  "Day 9: Encoding Error"
+  []
+  (let [ints (read-ints "inputs/dec9")]
+    (smallest-contiguous-sum ints
+                             (check-n-previous ints 25))))
