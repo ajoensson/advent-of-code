@@ -168,4 +168,13 @@
   "Day 11: Seating System"
   []
   (-> (read-strs "inputs/dec11")
-      (seating-system)))
+      (seating-system 1 4)))
+
+
+(defn dec11pt2
+  "Day 11: Seating System"
+  []
+  (let [strs (read-strs "inputs/dec11")
+        look (max (count strs)
+                  (count (first strs)))]
+    (seating-system strs look 5)))
