@@ -15,7 +15,9 @@
             [advent-of-code-2020.dec8 :refer [handheld-halting
                                               corrupted-program]]
             [advent-of-code-2020.dec9 :refer [check-n-previous
-                                              smallest-contiguous-sum]]))
+                                              smallest-contiguous-sum]]
+            [advent-of-code-2020.dec10 :refer [jolt-outlets
+                                               adapter-arrangements]]))
 
 (defn read-strs
   [filename]
@@ -148,3 +150,15 @@
   (let [ints (read-ints "inputs/dec9")]
     (smallest-contiguous-sum ints
                              (check-n-previous ints 25))))
+
+(defn dec10
+  "Day 10: Adapter Array"
+  []
+  (-> (read-ints "inputs/dec10")
+      (jolt-outlets)))
+
+(defn dec10pt2
+  "Day 10: Adapter Array"
+  []
+  (-> (read-ints "inputs/dec10")
+      (adapter-arrangements)))

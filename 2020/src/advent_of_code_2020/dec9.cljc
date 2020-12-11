@@ -25,8 +25,8 @@
 
 (defn check-n-previous
   {:test (fn []
-           (clojure.test/is (= (check-n-previous example-input 5)
-                               127)))}
+           (is= (check-n-previous example-input 5)
+                127))}
   [items n]
   (->> (map (partial #(drop % items)) (range))
        (map (fn [items]
