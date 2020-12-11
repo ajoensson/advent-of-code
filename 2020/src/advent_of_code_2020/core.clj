@@ -17,7 +17,8 @@
             [advent-of-code-2020.dec9 :refer [check-n-previous
                                               smallest-contiguous-sum]]
             [advent-of-code-2020.dec10 :refer [jolt-outlets
-                                               adapter-arrangements]]))
+                                               adapter-arrangements]]
+            [advent-of-code-2020.dec11 :refer [seating-system]]))
 
 (defn read-strs
   [filename]
@@ -162,3 +163,9 @@
   []
   (-> (read-ints "inputs/dec10")
       (adapter-arrangements)))
+
+(defn dec11
+  "Day 11: Seating System"
+  []
+  (-> (read-strs "inputs/dec11")
+      (seating-system)))
