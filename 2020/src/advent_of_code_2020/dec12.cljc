@@ -77,3 +77,81 @@
         (vals $)
         (map #(max % (- %)) $)
         (apply + $)))
+
+(defn waypoint-forward
+  {:test (fn []
+           (is= (-> (waypoint-forward {:waypoint {:x 3
+                                                  :y 5}
+                                       :x        1
+                                       :y        2}
+                                      2)
+                    (select-keys [:x :y]))
+                {:x 7 :y 12})
+           (is= (-> (waypoint-forward {:waypoint {:x -3
+                                                  :y -5}
+                                       :x        1
+                                       :y        2}
+                                      2)
+                    (select-keys [:x :y]))
+                {:x -5 :y -8}))}
+  [boat times]
+  (reduce-kv (fn [boat key wp-val]
+               (update boat
+                       key
+                       (partial + (* wp-val times))))
+             boat
+             (:waypoint boat)))
+
+(defn rotate-waypoint
+  {:test (fn []
+           (is= (rotate-waypoint {:x 2 :y 3} 0)
+                {:x 2 :y 3})
+           (is= (rotate-waypoint {:x 2 :y 3} 1)
+                {:x 3 :y -2})
+           (is= (rotate-waypoint {:x 2 :y 3} 2)
+                {:x -2 :y -3})
+           (is= (rotate-waypoint {:x 2 :y 3} 3)
+                {:x -3 :y 2})
+           (is= (rotate-waypoint {:x 2 :y 3} -1)
+                {:x -3 :y 2}))}
+  [waypoint steps]
+  (let [step (mod steps 4)
+        x (:x waypoint)
+        y (:y waypoint)]
+    (if (= 0 step)
+      waypoint
+      (rotate-waypoint {:x y
+                        :y (- x)}
+                       (dec step)))))
+
+(defn travel-waypoint
+  [boat action]
+  (let [{act   :action
+         value :value} action]
+    (if (#{:north :east :south :west} act)
+      (update boat :waypoint #(travel % action))
+      (case act
+        :forward (waypoint-forward boat value)
+        :rotate (update boat :waypoint #(rotate-waypoint % value))))))
+
+(defn rain-risk-waypoint
+  {:test (fn []
+           (is= (rain-risk-waypoint ["F10"
+                                     "N3"
+                                     "F7"
+                                     "R90"
+                                     "F11"])
+                286))}
+  [strings]
+  (as-> strings $
+        (parse-directions $)
+        (reduce travel-waypoint
+                {:waypoint {:x 10
+                            :y 1}
+                 :x        0
+                 :y        0}
+                $)
+        (select-keys $ [:x :y])
+        (vals $)
+        (map #(max % (- %)) $)
+        (apply + $)))
