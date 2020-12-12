@@ -18,7 +18,8 @@
                                               smallest-contiguous-sum]]
             [advent-of-code-2020.dec10 :refer [jolt-outlets
                                                adapter-arrangements]]
-            [advent-of-code-2020.dec11 :refer [seating-system]]))
+            [advent-of-code-2020.dec11 :refer [seating-system]]
+            [advent-of-code-2020.dec12 :refer [rain-risk]]))
 
 (defn read-strs
   [filename]
@@ -178,3 +179,9 @@
         look (max (count strs)
                   (count (first strs)))]
     (seating-system strs look 5)))
+
+(defn dec12
+  "Day 12: Rain Risk"
+  []
+  (-> (read-strs "inputs/dec12")
+      (rain-risk)))
