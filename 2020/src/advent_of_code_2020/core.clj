@@ -21,7 +21,8 @@
             [advent-of-code-2020.dec11 :refer [seating-system]]
             [advent-of-code-2020.dec12 :refer [rain-risk
                                                rain-risk-waypoint]]
-            [advent-of-code-2020.dec13 :refer [shuttle-search]]))
+            [advent-of-code-2020.dec13 :refer [shuttle-search
+                                               real-shuttle]]))
 
 (defn read-strs
   [filename]
@@ -199,3 +200,9 @@
   []
   (-> (read-strs "inputs/dec13")
       (shuttle-search)))
+
+(defn dec13pt2
+  "Day 13: Shuttle Search"
+  []
+  (-> (read-strs "inputs/dec13")
+      (real-shuttle)))
