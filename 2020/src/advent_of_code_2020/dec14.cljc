@@ -14,10 +14,9 @@
      1))
 
 (defn parse-mask
-  [string]
-  (let [mask (subs string 7)]
-    {:ones  (read-bin #{\1} mask)
-     :zeros (bit-not (read-bin #{\0} mask))}))
+  [mask]
+  {:ones  (read-bin #{\1} mask)
+   :zeros (bit-not (read-bin #{\0} mask))})
 
 (defn parse-call
   {:test (fn []
@@ -53,12 +52,13 @@
                 165))}
   [strings]
   (->> strings
-       (parse-inputs parse-mask)
+       (parse-inputs (comp parse-mask
+                           #(subs % 7)))
        (map (fn [{mask  :mask
                   calls :calls}]
               (map #(update % :val (partial mask-value mask))
                    calls)))
-       (reduce concat)
+       (apply concat)
        (map vals)
        (map vec)
        (into {})
