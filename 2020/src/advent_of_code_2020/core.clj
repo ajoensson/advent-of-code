@@ -22,7 +22,9 @@
             [advent-of-code-2020.dec12 :refer [rain-risk
                                                rain-risk-waypoint]]
             [advent-of-code-2020.dec13 :refer [shuttle-search
-                                               real-shuttle]]))
+                                               real-shuttle]]
+            [advent-of-code-2020.dec14 :refer [docking-data
+                                               docking-data-floating]]))
 
 (defn read-strs
   [filename]
@@ -206,3 +208,15 @@
   []
   (-> (read-strs "inputs/dec13")
       (real-shuttle)))
+
+(defn dec14
+  "Day 14: Docking Data"
+  []
+  (-> (read-strs "inputs/dec14")
+      (docking-data)))
+
+(defn dec14pt2
+  "Day 14: Docking Data"
+  []
+  (-> (read-strs "inputs/dec14")
+      (docking-data-floating)))
