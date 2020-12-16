@@ -24,7 +24,8 @@
             [advent-of-code-2020.dec13 :refer [shuttle-search
                                                real-shuttle]]
             [advent-of-code-2020.dec14 :refer [docking-data
-                                               docking-data-floating]]))
+                                               docking-data-floating]]
+            [advent-of-code-2020.dec15 :refer [memory-game]]))
 
 (defn read-strs
   [filename]
@@ -220,3 +221,9 @@
   []
   (-> (read-strs "inputs/dec14")
       (docking-data-floating)))
+
+(defn dec15
+  []
+  (-> (read-strs "inputs/dec15")
+      (first)
+      (memory-game 2020)))
