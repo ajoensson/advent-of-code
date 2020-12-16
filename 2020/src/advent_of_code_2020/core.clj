@@ -227,3 +227,9 @@
   (-> (read-strs "inputs/dec15")
       (first)
       (memory-game 2020)))
+
+(defn dec15pt2
+  []
+  (-> (read-strs "inputs/dec15")
+      (first)
+      (memory-game 30000000)))
