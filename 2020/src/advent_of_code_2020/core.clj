@@ -25,7 +25,9 @@
                                                real-shuttle]]
             [advent-of-code-2020.dec14 :refer [docking-data
                                                docking-data-floating]]
-            [advent-of-code-2020.dec15 :refer [memory-game]]))
+            [advent-of-code-2020.dec15 :refer [memory-game]]
+            [advent-of-code-2020.dec16 :refer [ticket-translation
+                                               my-ticket-translation-values]]))
 
 (defn read-strs
   [filename]
@@ -223,13 +225,27 @@
       (docking-data-floating)))
 
 (defn dec15
+  "Day 15: Rambunctious Recitation"
   []
   (-> (read-strs "inputs/dec15")
       (first)
       (memory-game 2020)))
 
 (defn dec15pt2
+  "Day 15: Rambunctious Recitation"
   []
   (-> (read-strs "inputs/dec15")
       (first)
       (memory-game 30000000)))
+
+(defn dec16
+  "Day16: Ticket Translation"
+  []
+  (-> (read-strs "inputs/dec16")
+      (ticket-translation)))
+
+(defn dec16pt2
+  "Day16: Ticket Translation"
+  []
+  (-> (read-strs "inputs/dec16")
+      (my-ticket-translation-values)))
