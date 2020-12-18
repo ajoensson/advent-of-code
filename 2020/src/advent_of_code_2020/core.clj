@@ -27,7 +27,9 @@
                                                docking-data-floating]]
             [advent-of-code-2020.dec15 :refer [memory-game]]
             [advent-of-code-2020.dec16 :refer [ticket-translation
-                                               my-ticket-translation-values]]))
+                                               my-ticket-translation-values]]
+
+            [advent-of-code-2020.dec18 :refer [operation-order]]))
 
 (defn read-strs
   [filename]
@@ -239,13 +241,21 @@
       (memory-game 30000000)))
 
 (defn dec16
-  "Day16: Ticket Translation"
+  "Day 16: Ticket Translation"
   []
   (-> (read-strs "inputs/dec16")
       (ticket-translation)))
 
 (defn dec16pt2
-  "Day16: Ticket Translation"
+  "Day 16: Ticket Translation"
   []
   (-> (read-strs "inputs/dec16")
       (my-ticket-translation-values)))
+
+; December 17th
+
+(defn dec18
+  "Day 18: Operation Order"
+  []
+  (-> (read-strs "inputs/dec18")
+      (operation-order)))
