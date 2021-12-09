@@ -18,12 +18,15 @@
 
 (dec8 "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe")
 
+(defn grouped-numbers [arr]
+  (group-by
+   (comp count
+         segments-to-numbers
+         count)
+   arr))
+
 (defn get-simple-numbers [arr]
-  (->> arr
-       (filter (comp (partial = 1)
-                     count
-                     segments-to-numbers
-                     count))))
+  (get (grouped-numbers arr) 1))
 
 (defn dec8 [input]
   (->> input
@@ -67,16 +70,43 @@
                         code)
         missing (apply disj (set segments)
                        translated)]
-    [segments translated missing]))
+    (empty? missing)))
+
+(defn correct-mapping-for [mapping code-values]
+  (every? (partial apply does-map-to mapping)
+          code-values))
+
+(defn to-code-values [s]
+  (mapv
+   #(vector (to-num s) %)
+   (segments-to-numbers (count s))))
 
 (does-map-to (to-num "acedgfb") (to-num "gcdfa") 2)
 
 (defn do-stuff [[signals nums]]
-  (let [simple-codes-values (map (comp
-                                  #(vector % (first (segments-to-numbers (count %))))
-                                  to-num)
-                                 (get-simple-numbers signals))]
-                                  simple-codes-values))
+  (let [grouped (grouped-numbers signals)
+        simple-codes-values (map (comp first to-code-values)
+                                 (get grouped 1))
+        fivers (permutations (filter #(= 5 (count %))
+                                     signals))
+        sixers (permutations (filter #(= 6 (count %))
+                                     signals))
+        correct-mapping (->> all-mappings
+                             (filter #(correct-mapping-for % simple-codes-values))
+                             (filter (fn [mapping]
+                                       (some (fn [signals]
+                                               (correct-mapping-for mapping
+                                                                    (map (fn [signal num] [(to-num signal) num])
+                                                                         signals (segments-to-numbers 5))))
+                                             fivers)))
+                             (filter (fn [mapping]
+                                       (some (fn [signals]
+                                               (correct-mapping-for mapping
+                                                                    (map (fn [signal num] [(to-num signal) num])
+                                                                         signals (segments-to-numbers 6))))
+                                             sixers)))
+                             (first))]
+    correct-mapping))
 
 (defn dec8-extra [input]
   (->> input
@@ -84,6 +114,8 @@
        (map do-stuff)))
 
 (dec8-extra "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf")
+
+(dec8-extra input)
 
 (def input "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
