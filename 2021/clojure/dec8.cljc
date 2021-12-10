@@ -106,16 +106,25 @@
                                                                          signals (segments-to-numbers 6))))
                                              sixers)))
                              (first))]
-    correct-mapping))
+    (->> nums
+         (map to-num)
+         (map (partial map (partial get (zipmap (range) correct-mapping))))
+         (map sort)
+         (map #(first (filter (comp (partial = %)
+                                    (partial get num-to-segment))
+                              (range))))
+         (map * [1000 100 10 1])
+         (apply +))))
 
 (defn dec8-extra [input]
   (->> input
        (parse-input)
-       (map do-stuff)))
+       (map do-stuff)
+       (apply +)))
 
 (dec8-extra "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf")
 
-(dec8-extra input)
+(dec8-extra input-full)
 
 (def input "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
