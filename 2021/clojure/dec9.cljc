@@ -12,7 +12,7 @@
        (apply hash-map)))
 
 (defn get-height [heights pos]
-  (get heights pos 10))
+  (get heights pos 9))
 
 (defn get-neighbors [x y steps]
   (let [the-range (map inc (range steps))]
@@ -24,19 +24,49 @@
 (get-neighbors 3 7 2)
 
 (defn is-higher [heights steps [[x y] my-height]]
-    (every? #(< (get-height heights %) my-height)
-    (get-neighbors x y steps)))
+  (every? #(< my-height (get-height heights %))
+          (get-neighbors x y steps)))
 
 (defn dec9 [input span]
   (let [heights (parse-input input)
         [max-x max-y] (last (sort (keys heights)))]
-        (->> (filter (partial is-higher heights span) heights)
-        (map first)
-        (map (partial get-height heights))
-        (map inc)
-        (apply +))))
+    (->> (filter (partial is-higher heights span) heights)
+         (map first)
+         (map (partial get-height heights))
+         (map inc)
+         (apply +))))
+
+(defn get-next-pos [heights coords]
+  (let [new-cords
+        (->> coords
+             (mapcat (fn [[x y]]
+                       (filter #(and (< (get-height heights [x y])
+                                        (get-height heights %))
+                                     (not= (get-height heights %) 9))
+                               (get-neighbors x y 1)))))]
+    (distinct (concat coords new-cords))))
+[new-cords (+ sum
+              (count coords))]
+
+(defn dec9-extra [input]
+  (let [heights (parse-input input)
+        low-points (->> heights
+                        (filter (partial is-higher heights 1))
+                        (map first))]
+    (println low-points)
+    (->> low-points
+         (map #(->> (iterate (partial get-next-pos heights)
+                             [%])
+                    (take 11)
+                    (last)
+                    (count)))
+         (sort-by -)
+         (take 3)
+         (apply *))))
 
 (dec9 input-full 1)
+
+(dec9-extra input-full)
 
 (def input "2199943210
 3987894921
