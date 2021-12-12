@@ -11,24 +11,28 @@
                (range))
        (apply hash-map)))
 
-(defn get-neighbors [heights x y steps]
+(defn get-height [heights pos]
+  (get heights pos 10))
+
+(defn get-neighbors [x y steps]
   (let [the-range (map inc (range steps))]
     (->> (concat (mapcat #(vector [x (+ y %)] [x (- y %)])
                          the-range)
                  (mapcat #(vector [(+ x %) y] [(- x %) y])
-                         the-range))
-         (map #(get heights % 10)))))
+                         the-range)))))
 
-(get-neighbors {[3 6] 14} 3 7 2)
+(get-neighbors 3 7 2)
 
 (defn is-higher [heights steps [[x y] my-height]]
-    (every? (partial < my-height) (get-neighbors heights x y steps)))
+    (every? #(< (get-height heights %) my-height)
+    (get-neighbors x y steps)))
 
 (defn dec9 [input span]
   (let [heights (parse-input input)
         [max-x max-y] (last (sort (keys heights)))]
         (->> (filter (partial is-higher heights span) heights)
-        (map second)
+        (map first)
+        (map (partial get-height heights))
         (map inc)
         (apply +))))
 
